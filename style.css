@@ -1,0 +1,447 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    font-family: poppins, sans-serif;
+
+    img {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-drag: none;
+        -webkit-touch-callout: none;
+    }
+
+    /* overflow-x: hidden;
+    overflow-y: scroll; */
+
+    &::-webkit-scrollbar {
+        scrollbar-width: none;
+    }
+
+    .hidden {
+        display: none;
+    }
+}
+
+:root {
+    --primary-color: rgb(255, 82, 56);
+    --secondary-color-light: rgb(255, 240, 238);
+    --secondary-color-dark: rgb(255, 150, 134);
+    --background-color: #f9f9f9;
+    --primary-text-color: #333;
+    --secondary-text-color: white;
+}
+
+.headTitle {
+    margin: 25px auto 0 20px;
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.poppins-thin {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.poppins-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.poppins-medium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.poppins-semibold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.poppins-bold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.poppins-extrabold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.poppins-black {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.poppins-thin-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: italic;
+}
+
+.poppins-extralight-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: italic;
+}
+
+.poppins-light-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.poppins-regular-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.poppins-medium-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.poppins-semibold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.poppins-bold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.poppins-extrabold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.poppins-black-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Loader CSS */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color);
+    /* Semi-transparent white background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    /* Ensure it's on top of other content */
+}
+
+
+.gradient-image {
+    width: 300px;
+    height: 300px;
+
+    background: linear-gradient(270deg, #111111, #3d3d3d, #111111, #3d3d3d, #111111, #3d3d3d, #111111, #3d3d3d, #111111);
+    background-size: 1000% 1000%;
+    animation: gradientFlow 10s linear infinite;
+
+    /* Mask with transparent PNG */
+    -webkit-mask: url("assets 2/logo.png") center/contain no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+
+    mask: url("assets 2/logo.png") center/contain no-repeat;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 200% 50%;
+        /* keeps moving forward instead of reversing */
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+/* .image-with-animated-gradient {
+  background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0)), url('your-image.jpg');
+  background-size: cover;
+  animation: gradient-slide 5s infinite alternate;
+} */
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+    color: black;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .active {
+        filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%);
+    }
+}
+
+
+
+/* add universal left/right spacing */
+.universalSpace {
+    display: flex;
+    flex-direction: column;
+
+    .universalContentSpace {
+        margin-top: 20px;
+        align-self: center;
+        width: calc(97% - 40px);
+    }
+}
+
+
+.red {
+    filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%);
+}
+
+
+.hidden {
+    animation: goaway 1s ease-out;
+    display: none;
+}
+
+@keyframes goaway {
+    0% {
+        visibility: 1;
+    }
+
+    50% {
+        visibility: 0.5;
+    }
+
+    100% {
+        visibility: 0;
+    }
+}
+
+.separator {
+    margin-top: 75px;
+}
+
+/* FooterMenu */
+.footerMenu {
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+
+    &>*:hover {
+        filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%);
+    }
+
+    a,
+    div {
+        text-align: center;
+        color: rgb(100, 100, 100);
+        font-size: 14px;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}
+
+/* removing arrows of input numbers */
+/* For Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+
+
+
+
+
+/* Styles for light theme (default) */
+/* body {
+  background-color: white;
+  color: black;
+} */
+
+
+html[data-theme='dark'] {
+    --background-color: #121212;
+    --primary-text-color: white;
+    --secondary-text-color: black;
+
+    heading {
+        color: black;
+    }
+
+    body {
+        color: white;
+    }
+
+    .footerMenu>*:hover {
+        filter: brightness(100) !important;
+        filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%) !important;
+    }
+
+    .notification {
+        img {
+            filter: brightness(1) !important;
+        }
+    }
+
+    #search-bar input,
+    .searchLogo,
+    .filter {
+        background-color: var(--secondary-color-light) !important;
+        color: white;
+    }
+}
+
+
+/* Styles for dark theme */
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme='light']) {
+        --background-color: #121212;
+        --primary-text-color: white;
+        --secondary-text-color: black;
+
+        heading {
+            color: black;
+        }
+
+        body {
+            color: white;
+        }
+
+        .footerMenu>*:hover {
+            filter: brightness(100) !important;
+            filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%) !important;
+        }
+
+        .notification {
+            img {
+                filter: brightness(1) !important;
+            }
+        }
+
+        #search-bar input,
+        .searchLogo,
+        .filter {
+            background-color: var(--secondary-color-light) !important;
+            color: white;
+        }
+    }
+}
