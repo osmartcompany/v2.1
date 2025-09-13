@@ -405,8 +405,6 @@ nextFormContent1.addEventListener("click", () => {
             'address': document.querySelector('#address').value,
         }
         localStorage.setItem('localOrderForm', JSON.stringify(localOrderForm))
-        // changeView('.orderInfo', '.payment')
-        document.getElementById('order-form').reset()
         changeContent('','boardServiceOrder2')
     }, 500)
 })
@@ -422,11 +420,6 @@ nextFormContent2.addEventListener("click", () => {
     localOrderForm['accountNumber'] = document.querySelector('#accountNumber').value
     localStorage.setItem('localOrderForm', JSON.stringify(localOrderForm))
     setTimeout(() => {
-        // document.querySelectorAll('.step')[1].classList.remove('current')
-        // document.querySelectorAll('.step')[1].classList.add('completed')
-        // document.querySelectorAll('.step')[2].classList.add('current')
-        // changeView('.payment', '.paymentConfirmation')
-        document.getElementById('order-form').reset()
         changeContent('services','boardServiceOrder3')
     }, 500)
 })
@@ -633,4 +626,5 @@ async function startImageUpload(orderid) {
     } catch (err) {
         showToast('Error')
     }
+
 }
