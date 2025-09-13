@@ -29,50 +29,32 @@ async function loadOrders() {
   ordersContainer.innerHTML = ''
   const orderCount = parseInt(localStorage.getItem("orderCount") || "0", 10);
   for (let i = 1; i <= orderCount; i++) {
-    const orderId = localStorage.getItem(i.toString());
-    if (!orderId) continue;
 
-    // First check which collection this order is in
-    let orderDoc = null;
-    let state = "";
-
-    const collections = ["completed orders", "pending orders", "new orders"];
-    for (const col of collections) {
-      const doc = await db.collection("orders").doc(col).collection("list").doc(orderId).get();
-      if (doc.exists) {
-        orderDoc = doc.data();
-        state = col;
-        break;
-      }
-    }
-
+    // Parse the JSON string back into a JavaScript object
+    const orderDoc = JSON.parse(localStorage.getItem(i));
     if (!orderDoc) continue;
 
-    const productid = orderDoc.productid;
-    const pidDoc = await db.collection("productid").doc(productid).get();
-    if (!pidDoc.exists) continue;
-
-    const { path, selling_price, name, image } = pidDoc.data();
-    const imgSrc = image?.[0] || "assets 2/default.png";
+    console.log(orderDoc.title); // Output: John Doe
+    console.log(orderDoc.date);  // Output: 30
 
     // Estimated delivery: 3–5 days
-    const placedDate = orderDoc.order_placed?.toDate?.() || new Date(orderDoc.order_placed);
+    const placedDate = orderDoc.date?.toDate?.() || new Date(orderDoc.date);
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     const estFrom = new Date(placedDate);
     estFrom.setDate(estFrom.getDate() + orderRange1);
     const estTo = new Date(placedDate);
     estTo.setDate(estTo.getDate() + orderRange2);
-
+    let state = 'complete'
     let state2 = state == 'complete' ? 'received' : 'pending'
     // Create card
     addOrderCard({
-      title: name,
-      price: selling_price,
+      title: orderDoc.title,
+      price: orderDoc.price,
       date: `${placedDate.toLocaleDateString(undefined, options)}`,
       deliveryRange: `${estFrom.toLocaleDateString(undefined, options)} - ${estTo.toLocaleDateString(undefined, options)}`,
       status: state2,
-      image: imgSrc,
-      orderid: orderId,
+      image: orderDoc.image,
+      orderid: orderDoc.orderid,
     });
   }
 }

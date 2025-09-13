@@ -59,6 +59,58 @@
 }
 
 
+.successOverlayContainer {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000000;
+}
+
+.successOverlay {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    position: fixed;
+    top: calc(50vh - 100px);
+    left: calc(50vw - 70px);
+    width: min-content;
+    /* aspect-ratio: 1/1; */
+    /* top: 50vh;
+    left: 50vw; */
+    background-color: white;
+    color: black;
+    border-radius: 1rem;
+
+    .successOverlayImage {
+        position: relative;
+        height: 150px;
+        width: 150px;
+
+        &>* {
+            position: absolute;
+        }
+    }
+
+    .successOverlayText {
+        text-align: center;
+        font-weight: 700;
+        padding: 10px;
+    }
+}
+
+
+
+
+
+
+
 
 /* calculate this first for replacing media query min-width:
 calc(var(--service-width-max) * 3 + var(--service-gap) * 2);
@@ -663,6 +715,8 @@ calc(var(--service-width-max) * 3 + var(--service-gap) * 2);
     opacity: 1;
 }
 
+
+/* .nextFormContent1,  */
 .nextFormContent2,
 .nextFormContent3 {
     width: 100%;

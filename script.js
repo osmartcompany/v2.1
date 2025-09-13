@@ -6,39 +6,29 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-let currentMenu = 'services';
-
-let runningSection = {
-    services: 'main',
-    activity: 'main',
-    settings: 'main'
-}
+let currentMenu = document.querySelector('.referenceMenu').innerHTML;
+let currentSection = document.querySelector('.referenceSection').innerHTML;
 
 // navigation function
-function changeContent(Menu, Section = '') {
-    if (Menu !== '') {
-        document.querySelector(`.${currentMenu}`).classList.toggle('active');
-        document.querySelector(`.${currentMenu}Menu`).classList.toggle('hidden')
-
-        currentMenu = Menu
-        document.querySelector(`.${currentMenu}`).classList.toggle('active');
-        document.querySelector(`.${currentMenu}Menu`).classList.toggle('hidden')
-        let upperCase = Menu.charAt(0).toUpperCase() + Menu.replace(Menu.charAt(0), '')
-        document.title = `oSmart | ${upperCase}`
-    }
-    if (Section !== '') {
-        document.querySelector(`.${`${currentMenu}-${runningSection[currentMenu]}`}`).classList.toggle('hidden')
-        runningSection[currentMenu] = Section
-        document.querySelector(`.${`${currentMenu}-${runningSection[currentMenu]}`}`).classList.toggle('hidden')
-    }
+function changeContent(Menu, Section) {
+    const menu = Menu == '' ? `${currentMenu}` : Menu
+    document.querySelector(`.${currentMenu}`).classList.toggle('active');
+    const section = Section == '' ? 'main' : Section
+    window.location = `${menu}-${section}.html`
+    document.querySelector(`.${menu}`).classList.toggle('active');
 }
 
 // click on menu when on same menu to navigate to its main section
 function changeMenu(Menu) {
-    currentMenu == Menu ? changeContent(Menu, 'main') : changeContent(Menu)
+    changeContent(Menu, 'main')
 }
 
 
+if (currentMenu == 'services' && currentSection == 'boardServiceOrder') {
+    const productid = localStorage.getItem('productid')
+    globalThis.productid = productid
+    fetchProduct();
+}
 
 
 
@@ -55,83 +45,32 @@ window.addEventListener('load', function () {
 });
 
 
-selectUniversity('BISEH')
 
 
 
+if (currentMenu == 'services' && currentSection == 'main') {
+    let category = 'BISEH';
+    globalThis.category = category; // Store category globally
+    // if its not previously loaded, then load the prices
+    document.querySelectorAll('.boardServicePrice').forEach(e => e.textContent = "Loading...");
+    loadServicePrice();
+}
 
 
 
-
-
-
-
-
-// Na wanjae
-window.addEventListener('beforeunload', function (event) {
-    // Prompt the user before leaving the page
-    event.preventDefault();
-    // event.defaultPrevented
-    event.returnValue = ''; // Required for some browsers
-});
 
 
 
 // Select University is working, I checked it
-async function selectUniversity(university) {
-    let category = university;
-    globalThis.category = category; // Store category globally
-    // if its not previously loaded, then load the prices
-    document.querySelectorAll('.boardServicePrice').forEach(e => e.textContent = "Loading...");
-    changeContent('', 'main');
-    await loadServicePrice();
-}
 
-async function selectProductOrder(product) {
-    let productid = product; // Store serviceid globally
-    globalThis.productid = productid
-    document.querySelector('#class-name').required = false
-    document.querySelector('#group-select').required = false
-    document.querySelector('#seat_number').required = false
-    document.querySelector('#record_year').required = false
-    document.querySelectorAll('.UniOnly').forEach((element) => {
-        element.setAttribute('style', 'display: none;')
-    })
-    document.getElementById("productid-input").value = productid;
-    clearProductUI()
-    document.querySelector('.footerMenu').classList.add('hidden')
-    changeContent('services', 'boardServiceOrder');
-    await fetchProduct(); // Default to Marks Certificate
-}
 
 
 async function selectBoardService(product) {
-    let productid = product; // Store serviceid globally
-    globalThis.productid = productid
-    document.querySelector('#class-name').required = true
-    document.querySelector('#group-select').required = true
-    document.querySelector('#seat_number').required = true
-    document.querySelector('#record_year').required = true
-    document.querySelectorAll('.UniOnly').forEach((element) => {
-        element.setAttribute('style', '')
-    })
-    document.getElementById("productid-input").value = productid;
+    localStorage.setItem('productid', product)
     clearProductUI()
     document.querySelector('.footerMenu').classList.add('hidden')
-    changeContent('services', 'boardServiceOrder');
-    await fetchProduct(); // Default to Marks Certificate
+    changeContent('', 'boardServiceOrder');
 }
-
-
-
-function goBackToSelectBoardService() {
-    changeContent('', 'main');
-    document.getElementById("order-form").reset();
-}
-
-
-
-
 
 
 
@@ -253,61 +192,86 @@ function clearProductUI() {
 }
 
 function enableNextFormContent1() {
-    nextFormContent1.disabled = false;
-    nextFormContent1.setAttribute('style', "");
+    console.log('enabled');
+    document.querySelectorAll('.btndsl').forEach((element)=>{
+        element.disabled = false;
+    })
+    // nextFormContent1.disabled = false;
+    // nextFormContent1.setAttribute('style', "");
 }
 
 function disableNextFormContent1() {
-    nextFormContent1.disabled = true;
-    nextFormContent1.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
+    console.log('disabled');
+    document.querySelectorAll('.btndsl').forEach((element)=>{
+        element.disabled = true;
+    })
+    // nextFormContent1.disabled = true;
+    // nextFormContent1.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
 }
 
-function enableNextFormContent2() {
-    nextFormContent2.disabled = false;
-    nextFormContent2.setAttribute('style', "");
-}
+// function enableNextFormContent2() {
+//     nextFormContent2.disabled = false;
+//     // nextFormContent2.setAttribute('style', "");
+// }
 
-function disableNextFormContent2() {
-    nextFormContent2.disabled = true;
-    nextFormContent2.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
-}
+// function disableNextFormContent2() {
+//     nextFormContent2.disabled = true;
+//     // nextFormContent2.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
+// }
 
-function enableNextFormContent3() {
-    nextFormContent3.disabled = false;
-    nextFormContent3.setAttribute('style', "");
-}
+// function enableNextFormContent3() {
+//     nextFormContent3.disabled = false;
+//     nextFormContent3.setAttribute('style', "");
+// }
 
-function disableNextFormContent3() {
-    nextFormContent3.disabled = true;
-    nextFormContent3.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
-}
+// function disableNextFormContent3() {
+//     nextFormContent3.disabled = true;
+//     nextFormContent3.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
+// }
 
 document.getElementById("order-form").addEventListener("input", validateForm1);
 function validateForm1() {
     const form = document.getElementById("order-form");
     const fields = [...form.elements].filter(el => el.hasAttribute("required"));
     const filled = fields.every(el => el.value.trim() !== "");
-    if (filled && currentProduct?.selling_price) {
-        enableNextFormContent1()
+    if (filled) {
+        if (currentMenu=='services' && currentSection=='boardServiceOrder'){
+            if (currentProduct?.selling_price){
+                enableNextFormContent1()
+            } else {
+                disableNextFormContent1()
+            }
+        } else {
+            enableNextFormContent1()
+        }
     } else {
         disableNextFormContent1()
     }
 }
 
-
-
-function validateForm2() {
-    const form = document.getElementById("order-form");
-    const fields = [...form.elements].filter(el => el.hasAttribute("required"));
-    const filled = fields.every(el => el.value.trim() !== "");
-    if (filled && currentProduct?.selling_price) {
-        enableNextFormContent2()
-    } else {
-        disableNextFormContent2()
+if (currentSection=='boardServiceOrder2' || currentSection=='boardServiceOrder3'){
+    let a = JSON.parse(localStorage.getItem('localProductInfo'))
+    if (!a) {
+        changeContent('','')
     }
+    document.querySelector('#product-name').innerHTML = a['product_name']
+    document.querySelector('#price-display').innerHTML = a['product_price']
+    document.querySelector('#product-image').src = a['image_src']
 }
 
-document.getElementById("order-form").addEventListener("input", validateForm2);
+
+// function validateForm2() {
+//     const form = document.getElementById("order-form");
+//     const fields = [...form.elements].filter(el => el.hasAttribute("required"));
+//     const filled = fields.every(el => el.value.trim() !== "");
+//     if (filled && currentProduct?.selling_price) {
+//         enableNextFormContent2()
+//     } else {
+//         disableNextFormContent2()
+//     }
+// }
+
+// document.getElementById("order-form").addEventListener("input", validateForm2);
 
 
 
@@ -315,9 +279,11 @@ screenshotFile.addEventListener('change', (event) => {
     const selectedFiles = event.target.files;
 
     if (selectedFiles.length > 0) {
-        enableNextFormContent3()
+        // enableNextFormContent3()
+        enableNextFormContent1()
     } else {
-        disableNextFormContent3()
+        // disableNextFormContent3()
+        disableNextFormContent1()
     }
 });
 
@@ -328,15 +294,26 @@ payButton.addEventListener("click", async () => {
     // disableNextFormContent3()
     const orderId = "ORD-" + Math.random().toString(36).substring(2, 10).toUpperCase();
     const form = document.getElementById("order-form");
-    const formData = Object.fromEntries(new FormData(form).entries());
+    const localOrderForm = JSON.parse(localStorage.getItem('localOrderForm'))
+    localOrderForm['accountTypeTo'] = document.querySelector('#accountTypeTo').value
+    const formData = localOrderForm
+    // const formData = Object.fromEntries(new FormData(form).entries());
 
     const orderData = {
-        productid: productid,
+        productid: localStorage.getItem('productid'),
         orderid: orderId,
         order_placed: new Date(),
         form: formData
     };
-    saveOrderInfo(orderId)
+    const localProductInfo = JSON.parse(localStorage.getItem('localProductInfo'))
+    const localOrderData = {
+        title: localProductInfo['product_name'],
+        price: localProductInfo['product_price'],
+        date: new Date(),
+        image: localProductInfo['image_src'],
+        orderid: orderId,
+    }
+    saveOrderInfo(localOrderData)
     console.log('orderData saved!')
 
     const overlay = document.getElementById("overlay");
@@ -360,13 +337,11 @@ payButton.addEventListener("click", async () => {
         await startImageUpload(orderId)
         await db.collection("orders").doc("new orders").collection("list").doc(orderId).set(orderData);
         showToast('Order Uploaded')
-        sessionStorage.setItem("pendingOrder", JSON.stringify({ ...orderData, name: currentProduct.name, category: currentProduct.category, price: currentProduct.selling_price }));
         redirected = true;
         clearTimeout(timeout);
         // where to go after submitting form
         overlay.classList.add("hidden");
         resetOffers()
-        loadOrders()
     } catch (e) {
         console.error(e);
         overlayText.textContent = "Error placing order.";
@@ -383,23 +358,17 @@ function saveOrderInfo(orderinfo) {
         localStorage.setItem('orderCount', String(Number(localStorage.getItem('orderCount')) + 1))
         orderCount = localStorage.getItem('orderCount')
     }
-    localStorage.setItem(orderCount, orderinfo)
+    localStorage.setItem(orderCount, JSON.stringify(orderinfo))
 }
 
 function resetOffers() {
-    changeView('.paymentConfirmation', '.orderInfo')
-    changeContent('', 'boardOrderSuccess')
-    document.querySelector('.footerMenu').classList.remove('hidden')
-    document.querySelectorAll('.step')[0].classList.remove('completed')
-    document.querySelectorAll('.step')[1].classList.remove('completed')
-    document.querySelectorAll('.step')[2].classList.remove('current')
-    document.querySelectorAll('.step')[0].classList.add('current')
-    // Clear the form
-    document.getElementById("order-form").reset();
-    document.getElementById('accountTypeFrom').required = false
-    document.getElementById('accountNumber').required = false
-    document.getElementById("screenshotFile").value = null;
-
+    document.querySelector('.successOverlayContainer').style = ''
+    localStorage.removeItem('localProductInfo')
+    localStorage.removeItem('localOrderForm')
+    setTimeout(()=>{
+        document.getElementById('order-form').reset()
+        window.location.replace('services-main.html')
+    }, 3000)
 }
 
 function changeView(Hide, Show) {
@@ -412,23 +381,53 @@ function changeView(Hide, Show) {
 nextFormContent1.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setTimeout(() => {
-        document.querySelectorAll('.step')[0].classList.remove('current')
-        document.querySelectorAll('.step')[0].classList.add('completed')
-        document.querySelectorAll('.step')[1].classList.add('current')
-        changeView('.orderInfo', '.payment')
-        document.getElementById('accountTypeFrom').required = true
-        document.getElementById('accountNumber').required = true
-        validateForm2()
+        // document.querySelectorAll('.step')[0].classList.remove('current')
+        // document.querySelectorAll('.step')[0].classList.add('completed')
+        // document.querySelectorAll('.step')[1].classList.add('current')
+        // document.getElementById('accountTypeFrom').required = true
+        // document.getElementById('accountNumber').required = true
+        const localProductInfo = {
+            'product_name': document.querySelector('#product-name').innerHTML,
+            'product_price': document.querySelector('#price-display').innerHTML,
+            'image_src': document.querySelector('#product-image').src
+        }
+        localStorage.setItem('localProductInfo', JSON.stringify(localProductInfo))
+        const localOrderForm = {
+            'customer': document.querySelector('#customer').value,
+            'class-name': document.querySelector('#class-name').value,
+            'group-select': document.querySelector('#group-select').value,
+            'seat_number': document.querySelector('#seat_number').value,
+            'record_year': document.querySelector('#record_year').value,
+            'phone': document.querySelector('#phone').value,
+            'district': document.querySelector('#district').value,
+            'city': document.querySelector('#city').value,
+            'area': document.querySelector('#area').value,
+            'address': document.querySelector('#address').value,
+        }
+        localStorage.setItem('localOrderForm', JSON.stringify(localOrderForm))
+        // changeView('.orderInfo', '.payment')
+        document.getElementById('order-form').reset()
+        changeContent('','boardServiceOrder2')
     }, 500)
 })
 
+if (currentMenu=='services' && currentSection=='boardServiceOrder2') {
+    validateForm1()
+}
+
 nextFormContent2.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+    const localOrderForm = JSON.parse(localStorage.getItem('localOrderForm'))
+    localOrderForm['accountTypeFrom'] = document.querySelector('#accountTypeFrom').value
+    localOrderForm['accountNumber'] = document.querySelector('#accountNumber').value
+    localStorage.setItem('localOrderForm', JSON.stringify(localOrderForm))
     setTimeout(() => {
-        document.querySelectorAll('.step')[1].classList.remove('current')
-        document.querySelectorAll('.step')[1].classList.add('completed')
-        document.querySelectorAll('.step')[2].classList.add('current')
-        changeView('.payment', '.paymentConfirmation')
+        // document.querySelectorAll('.step')[1].classList.remove('current')
+        // document.querySelectorAll('.step')[1].classList.add('completed')
+        // document.querySelectorAll('.step')[2].classList.add('current')
+        // changeView('.payment', '.paymentConfirmation')
+        document.getElementById('order-form').reset()
+        changeContent('services','boardServiceOrder3')
     }, 500)
 })
 
