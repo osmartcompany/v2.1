@@ -96,7 +96,7 @@
 
                 <!-- 💵 Payment Progress Bar -->
                 <div class="progress-container">
-                    <div class="step completed">
+                    <div class="step completed" onclick="history.go(-1);">
                         <div class="circle">1</div>
                         <p>Shipping Info</p>
                     </div>
@@ -104,7 +104,7 @@
                         <div class="circle">2</div>
                         <p>Payment</p>
                     </div>
-                    <div class="step">
+                    <div class="step" onclick="showToast('Fill form first!')">
                         <div class="circle">3</div>
                         <p>Confirmation</p>
                     </div>

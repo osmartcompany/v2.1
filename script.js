@@ -193,7 +193,7 @@ function clearProductUI() {
 
 function enableNextFormContent1() {
     console.log('enabled');
-    document.querySelectorAll('.btndsl').forEach((element)=>{
+    document.querySelectorAll('.btndsl').forEach((element) => {
         element.disabled = false;
     })
     // nextFormContent1.disabled = false;
@@ -202,7 +202,7 @@ function enableNextFormContent1() {
 
 function disableNextFormContent1() {
     console.log('disabled');
-    document.querySelectorAll('.btndsl').forEach((element)=>{
+    document.querySelectorAll('.btndsl').forEach((element) => {
         element.disabled = true;
     })
     // nextFormContent1.disabled = true;
@@ -235,8 +235,8 @@ function validateForm1() {
     const fields = [...form.elements].filter(el => el.hasAttribute("required"));
     const filled = fields.every(el => el.value.trim() !== "");
     if (filled) {
-        if (currentMenu=='services' && currentSection=='boardServiceOrder'){
-            if (currentProduct?.selling_price){
+        if (currentMenu == 'services' && currentSection == 'boardServiceOrder') {
+            if (currentProduct?.selling_price) {
                 enableNextFormContent1()
             } else {
                 disableNextFormContent1()
@@ -249,10 +249,10 @@ function validateForm1() {
     }
 }
 
-if (currentSection=='boardServiceOrder2' || currentSection=='boardServiceOrder3'){
+if (currentSection == 'boardServiceOrder2' || currentSection == 'boardServiceOrder3') {
     let a = JSON.parse(localStorage.getItem('localProductInfo'))
     if (!a) {
-        changeContent('','')
+        changeContent('', '')
     }
     document.querySelector('#product-name').innerHTML = a['product_name']
     document.querySelector('#price-display').innerHTML = a['product_price']
@@ -365,7 +365,7 @@ function resetOffers() {
     document.querySelector('.successOverlayContainer').style = ''
     localStorage.removeItem('localProductInfo')
     localStorage.removeItem('localOrderForm')
-    setTimeout(()=>{
+    setTimeout(() => {
         document.getElementById('order-form').reset()
         window.location.replace('services-main.html')
     }, 3000)
@@ -405,11 +405,13 @@ nextFormContent1.addEventListener("click", () => {
             'address': document.querySelector('#address').value,
         }
         localStorage.setItem('localOrderForm', JSON.stringify(localOrderForm))
-        changeContent('','boardServiceOrder2')
+        // changeView('.orderInfo', '.payment')
+        document.getElementById('order-form').reset()
+        changeContent('', 'boardServiceOrder2')
     }, 500)
 })
 
-if (currentMenu=='services' && currentSection=='boardServiceOrder2') {
+if (currentMenu == 'services' && currentSection == 'boardServiceOrder2') {
     validateForm1()
 }
 
@@ -420,7 +422,12 @@ nextFormContent2.addEventListener("click", () => {
     localOrderForm['accountNumber'] = document.querySelector('#accountNumber').value
     localStorage.setItem('localOrderForm', JSON.stringify(localOrderForm))
     setTimeout(() => {
-        changeContent('services','boardServiceOrder3')
+        // document.querySelectorAll('.step')[1].classList.remove('current')
+        // document.querySelectorAll('.step')[1].classList.add('completed')
+        // document.querySelectorAll('.step')[2].classList.add('current')
+        // changeView('.payment', '.paymentConfirmation')
+        document.getElementById('order-form').reset()
+        changeContent('services', 'boardServiceOrder3')
     }, 500)
 })
 
@@ -626,5 +633,4 @@ async function startImageUpload(orderid) {
     } catch (err) {
         showToast('Error')
     }
-
 }
